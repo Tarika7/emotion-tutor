@@ -31,17 +31,6 @@ An AI-powered tutoring system that adapts content difficulty and explanation sty
 - **Educator Dashboard**: Comprehensive analytics for teaching insights
 - **Tutor Quality Scoring**: Alignment between detected emotion and chosen adaptation
 
-## Screenshots
-
-![Upload Screen](assets/upload_screen.png)
-*Upload your PDF course material*
-
-![Learning Session](assets/learning_session.png)
-*Real-time tutoring with emotion tracking and adaptive feedback*
-
-![Analytics Dashboard](assets/analytics_dashboard.png)
-*Comprehensive session summary and engagement metrics*
-
 ## Tech Stack
 
 - **Backend**: Flask + Flask-CORS
@@ -116,28 +105,6 @@ emotion-tutor/
 5. **Response Analysis**: AI generates contextual feedback based on your answer and current emotion.
 6. **Analytics Dashboard**: Comprehensive session performance metrics when the session ends.
 
-## Push to GitHub Instructions
-
-To push this project to GitHub, open your terminal/command prompt in the `emotion-tutor` directory and run the following commands:
-
-```bash
-# 1. Initialize a new git repository
-git init
-
-# 2. Add all files to staging
-git add .
-
-# 3. Commit your files
-git commit -m "Initial commit: Multimodal Emotion-Aware Tutoring Agent"
-
-# 4. Create a new repository on GitHub (via web interface), then link it:
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
-
-# 5. Push to the main branch
-git branch -M main
-git push -u origin main
-```
-*Note: Make sure to create an `assets` folder and place the screenshots (`upload_screen.png`, `learning_session.png`, `analytics_dashboard.png`) in it before committing.*
 
 ## Evaluation Metrics
 
