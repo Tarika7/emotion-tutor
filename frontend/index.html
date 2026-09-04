@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emotion-Aware Learning System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- UPLOAD PAGE -->
+    <div id="uploadPage" class="page active">
+        <div class="container">
+            <h1>📚 Learning Material Upload</h1>
+            <p class="subtitle">Upload your study material (PDF) and start adaptive learning</p>
+
+            <div class="upload-section">
+                <div class="upload-box">
+                    <input type="file" id="pdfInput" accept=".pdf" style="display: none;">
+                    <div id="dropZone" class="drop-zone">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <h3>Drag & drop your PDF</h3>
+                        <p>or</p>
+                        <button class="btn-primary" onclick="document.getElementById('pdfInput').click()">
+                            Browse Files
+                        </button>
+                    </div>
+                </div>
+
+                <div id="uploadStatus" class="status hidden">
+                    <div class="spinner"></div>
+                    <p id="statusText">Uploading and processing PDF...</p>
+                </div>
+
+                <div id="uploadError" class="error hidden">
+                    <p id="errorText"></p>
+                </div>
+
+                <div id="uploadSuccess" class="success hidden">
+                    <div class="success-content">
+                        <h3>✅ Content Loaded Successfully!</h3>
+                        <div id="topicDetails"></div>
+                        <button class="btn-primary large" onclick="goToSessionConfig()">
+                            Configure Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SESSION CONFIG PAGE -->
+    <div id="sessionPage" class="page">
+        <div class="container">
+            <h1>⏱️ Session Configuration</h1>
+
+            <div class="session-config">
+                <div class="config-box">
+                    <h2>Learning Duration</h2>
+                    <p>How long would you like to study?</p>
+
+                    <div class="time-options">
+                        <label class="time-option">
+                            <input type="radio" name="duration" value="10" onchange="updateDuration(10)">
+                            <span>⏱️ 10 minutes</span>
+                        </label>
+                        <label class="time-option">
+                            <input type="radio" name="duration" value="15" checked onchange="updateDuration(15)">
+                            <span>⏱️ 15 minutes</span>
+                        </label>
+                        <label class="time-option">
+                            <input type="radio" name="duration" value="20" onchange="updateDuration(20)">
+                            <span>⏱️ 20 minutes</span>
+                        </label>
+                        <label class="time-option">
+                            <input type="radio" name="duration" value="30" onchange="updateDuration(30)">
+                            <span>⏱️ 30 minutes</span>
+                        </label>
+                    </div>
+
+                    <h2 style="margin-top: 30px;">Camera Check</h2>
+                    <p>We'll monitor your emotional state for adaptive teaching</p>
+
+                    <div class="camera-check">
+                        <video id="cameraPreview" autoplay playsinline></video>
+                        <div id="cameraStatus" class="status">Initializing camera...</div>
+                    </div>
+
+                    <h2 style="margin-top: 30px;">Session Overview</h2>
+                    <div class="session-overview">
+                        <div class="overview-item">
+                            <span class="label">Topics to Cover:</span>
+                            <span class="value" id="topicCount">-</span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="label">Study Duration:</span>
+                            <span class="value" id="durationDisplay">15 min</span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="label">Distraction Detection:</span>
+                            <span class="value">Enabled 🔍</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <button class="btn-primary large" onclick="startLearning()">
+                            🚀 Start Learning Session
+                        </button>
+                        <button class="btn-secondary" onclick="goToUpload()">
+                            ← Change Material
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEARNING PAGE -->
+    <div id="learningPage" class="page">
+        <div class="container">
+            <div class="learning-layout">
+                <!-- Left: Webcam & Status -->
+                <div class="left-panel">
+                    <div class="webcam-section">
+                        <h2>📹 Webcam</h2>
+                        <video id="webcam" autoplay playsinline></video>
+                        <div id="webcamStatus" class="status">Camera active ✅</div>
+                    </div>
+
+                    <div class="emotion-display">
+                        <div class="emotion-card">
+                            <h3>Current Emotion</h3>
+                            <div id="emotionCircle" class="emotion-big">😐</div>
+                            <p id="emotionName">Engaged</p>
+                            
+                            <!-- AI Enhancement Layer additions -->
+                            <div class="learning-state-tag" id="learningStateTag" style="margin-top: 10px; font-weight: bold; color: #22c55e;">
+                                😊 Optimal Learning
+                            </div>
+                            <div class="engagement-metric" style="margin-top: 5px; font-size: 0.9em; color: #94a3b8;">
+                                Engagement: <span id="engagementScoreDisplay">50</span>% (<span id="engagementTrendDisplay">stable</span>)
+                            </div>
+                        </div>
+
+                        <div class="distraction-warning" id="distractionWarning" style="display: none;">
+                            <p id="distractionMessage">📱 Phone detected!</p>
+                            <div class="countdown" id="distractionCountdown"></div>
+                        </div>
+                    </div>
+
+                    <div class="session-timer">
+                        <h3>Time Remaining</h3>
+                        <div id="timerDisplay" class="timer-big">15:00</div>
+                        <div class="progress-bar">
+                            <div id="progressFill" class="progress-fill"></div>
+                        </div>
+                        <p id="progressText">75% complete</p>
+                    </div>
+                </div>
+
+                <!-- Middle: Teaching Content -->
+                <div class="middle-panel">
+                    <div class="teaching-content">
+                        <div class="intervention" id="intervention" style="display: none;">
+                            <p id="interventionMessage"></p>
+                        </div>
+
+                        <div class="teaching-box" id="teachingBox" style="display: none; margin-bottom: 20px; background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 12px; border-left: 4px solid #3b82f6;">
+                            <h2>📖 Lesson</h2>
+                            <div id="teachingText" class="teaching-text" style="font-size: 1.1rem; line-height: 1.6; color: #e2e8f0; margin-bottom: 15px;"></div>
+                            <button id="readyButton" class="btn-primary" style="display: none;" onclick="showQuestion()">
+                                ✍️ I'm Ready for a Question
+                            </button>
+                        </div>
+
+                        <div class="question-box" id="questionBox" style="display: none;">
+                            <h2>📚 Question</h2>
+                            <div id="questionText" class="question-text"></div>
+
+                            <div class="answer-input">
+                                <input 
+                                    type="text" 
+                                    id="answer" 
+                                    placeholder="Type your answer..." 
+                                    onkeydown="handleKeyDown(event)"
+                                >
+                                <button class="btn-primary" onclick="submitAnswer()">
+                                    Submit
+                                </button>
+                            </div>
+
+                            <div id="feedback" class="feedback"></div>
+
+                            <div id="challengeSection" class="challenge-section" style="display: none;">
+                                <h3>🏆 Challenge Question!</h3>
+                                <p>You're doing great! Try this harder question:</p>
+                                <div id="challengeText" class="question-text"></div>
+                                <div class="answer-input">
+                                    <input 
+                                        type="text" 
+                                        id="challengeAnswer" 
+                                        placeholder="Your answer..."
+                                        onkeydown="if(event.key==='Enter') submitChallenge()"
+                                    >
+                                    <button class="btn-primary" onclick="submitChallenge()">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="strategy-box" id="strategyBox">
+                            <h3>📖 Teaching Strategy</h3>
+                            <p id="strategyText">Analyzing your needs...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Analytics -->
+                <div class="right-panel">
+                    <div class="analytics-box">
+                        <h2>📊 Session Analytics</h2>
+
+                        <div class="stat-item">
+                            <span class="stat-label">Latency</span>
+                            <span class="stat-value" id="latencyValue">...</span>
+                        </div>
+
+                        <div class="stat-item">
+                            <span class="stat-label">Interactions</span>
+                            <span class="stat-value" id="interactionCount">0</span>
+                        </div>
+
+                        <div class="stat-item">
+                            <span class="stat-label">Correctness</span>
+                            <span class="stat-value" id="correctnessRate">0%</span>
+                        </div>
+
+                        <div class="stat-item">
+                            <span class="stat-label">Distractions</span>
+                            <span class="stat-value" id="distractionCount">0</span>
+                        </div>
+
+                        <h3 class="mt-4">Emotion Timeline</h3>
+                        <canvas id="emotionChart" width="250" height="150"></canvas>
+                    </div>
+
+                    <div class="session-actions" style="margin-top: 20px;">
+                        <button class="btn-secondary" onclick="endSession()">
+                            📋 End Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SESSION SUMMARY PAGE -->
+    <div id="summaryPage" class="page">
+        <div class="container">
+            <h1>📋 Session Complete!</h1>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>⏱️ Duration</h3>
+                    <p id="summaryDuration" class="big-text">15:30</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>✓ Accuracy</h3>
+                    <p id="summaryAccuracy" class="big-text">85%</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>📊 Interactions</h3>
+                    <p id="summaryInteractions" class="big-text">12</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>🎯 Distractions</h3>
+                    <p id="summaryDistractions" class="big-text">2</p>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h2>Emotional Journey</h2>
+                <div id="emotionSummary"></div>
+            </div>
+
+            <div class="summary-section">
+                <h2>Topic Mastery</h2>
+                <div id="topicMastery"></div>
+            </div>
+
+            <div class="summary-section">
+                <h2>Recommendation</h2>
+                <div class="recommendation-box">
+                    <p id="recommendation"></p>
+                </div>
+            </div>
+
+            <div class="summary-actions">
+                <button class="btn-primary" onclick="newSession()">
+                    🔄 Start New Session
+                </button>
+                <button class="btn-secondary" onclick="downloadReport()">
+                    📥 Download Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BLOCKING OVERLAY -->
+    <div id="blockingOverlay" class="blocking-overlay" style="display: none;">
+        <div class="blocking-content">
+            <h2>🚫 FOCUS REQUIRED</h2>
+            <p id="blockingMessage">Remove distractions to continue learning.</p>
+            <div class="blocking-timer">
+                <p>Resume in: <span id="blockingTimer">5</span>s</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

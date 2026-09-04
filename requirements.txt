@@ -1,0 +1,11 @@
+flask
+flask-cors
+mediapipe
+opencv-python
+numpy
+anthropic
+scikit-learn
+joblib
+ultralytics
+pdfplumber
+werkzeug

@@ -1,0 +1,146 @@
+{
+  "topics": [
+    {
+      "id": "add_basic",
+      "title": "Basic Addition",
+      "difficulty": 1,
+      "prerequisites": [],
+      "explanation_template": "Addition combines numbers. {question} = {answer}",
+      "hint": "Count the numbers together",
+      "challenge": "Try adding three numbers!"
+    },
+    {
+      "id": "add_carry",
+      "title": "Addition with Carrying",
+      "difficulty": 2,
+      "prerequisites": ["add_basic"],
+      "explanation_template": "When digits sum to 10+, carry 1 to next place. {question} = {answer}",
+      "hint": "Add units first, carry if needed",
+      "challenge": "Add numbers with multiple carries!"
+    },
+    {
+      "id": "sub_basic",
+      "title": "Basic Subtraction",
+      "difficulty": 1,
+      "prerequisites": [],
+      "explanation_template": "Subtraction finds the difference. {question} = {answer}",
+      "hint": "Take away the smaller number",
+      "challenge": "Subtract larger numbers!"
+    },
+    {
+      "id": "sub_borrow",
+      "title": "Subtraction with Borrowing",
+      "difficulty": 2,
+      "prerequisites": ["sub_basic"],
+      "explanation_template": "Borrow 10 when needed. {question} = {answer}",
+      "hint": "Borrow from tens place",
+      "challenge": "Subtract with multiple borrows!"
+    },
+    {
+      "id": "mult_basic",
+      "title": "Basic Multiplication",
+      "difficulty": 2,
+      "prerequisites": ["add_basic"],
+      "explanation_template": "Multiplication is repeated addition. {question} = {answer}",
+      "hint": "Add the number multiple times",
+      "challenge": "Multiply larger numbers!"
+    },
+    {
+      "id": "mult_tables",
+      "title": "Multiplication Tables",
+      "difficulty": 3,
+      "prerequisites": ["mult_basic"],
+      "explanation_template": "Memorize these patterns. {question} = {answer}",
+      "hint": "Practice the tables regularly",
+      "challenge": "Race against time!"
+    },
+    {
+      "id": "div_basic",
+      "title": "Basic Division",
+      "difficulty": 3,
+      "prerequisites": ["mult_basic"],
+      "explanation_template": "Division splits into equal groups. {question} = {answer}",
+      "hint": "How many times does it fit?",
+      "challenge": "Divide larger numbers!"
+    },
+    {
+      "id": "fractions_intro",
+      "title": "Introduction to Fractions",
+      "difficulty": 3,
+      "prerequisites": ["div_basic"],
+      "explanation_template": "Fractions represent parts. {question} = {answer}",
+      "hint": "Numerator over denominator",
+      "challenge": "Compare different fractions!"
+    },
+    {
+      "id": "algebra_basic",
+      "title": "Basic Algebra",
+      "difficulty": 4,
+      "prerequisites": ["mult_tables"],
+      "explanation_template": "Solve for the unknown. {question} = {answer}",
+      "hint": "Isolate the variable",
+      "challenge": "Solve complex equations!"
+    },
+    {
+      "id": "geometry_shapes",
+      "title": "Basic Geometry",
+      "difficulty": 2,
+      "prerequisites": [],
+      "explanation_template": "Shapes have properties. {question} = {answer}",
+      "hint": "Remember shape formulas",
+      "challenge": "Calculate area and perimeter!"
+    }
+  ],
+  "questions": {
+    "add_basic": [
+      {"question": "What is 2 + 3?", "answer": "5"},
+      {"question": "What is 4 + 6?", "answer": "10"},
+      {"question": "What is 7 + 8?", "answer": "15"}
+    ],
+    "add_carry": [
+      {"question": "What is 7 + 6?", "answer": "13"},
+      {"question": "What is 8 + 9?", "answer": "17"},
+      {"question": "What is 15 + 27?", "answer": "42"}
+    ],
+    "sub_basic": [
+      {"question": "What is 5 - 2?", "answer": "3"},
+      {"question": "What is 10 - 4?", "answer": "6"},
+      {"question": "What is 15 - 7?", "answer": "8"}
+    ],
+    "sub_borrow": [
+      {"question": "What is 12 - 5?", "answer": "7"},
+      {"question": "What is 20 - 8?", "answer": "12"},
+      {"question": "What is 31 - 17?", "answer": "14"}
+    ],
+    "mult_basic": [
+      {"question": "What is 2 × 3?", "answer": "6"},
+      {"question": "What is 4 × 5?", "answer": "20"},
+      {"question": "What is 6 × 7?", "answer": "42"}
+    ],
+    "mult_tables": [
+      {"question": "What is 8 × 9?", "answer": "72"},
+      {"question": "What is 7 × 8?", "answer": "56"},
+      {"question": "What is 9 × 6?", "answer": "54"}
+    ],
+    "div_basic": [
+      {"question": "What is 12 ÷ 3?", "answer": "4"},
+      {"question": "What is 20 ÷ 5?", "answer": "4"},
+      {"question": "What is 18 ÷ 6?", "answer": "3"}
+    ],
+    "fractions_intro": [
+      {"question": "What is 1/2 of 10?", "answer": "5"},
+      {"question": "What is 1/4 of 12?", "answer": "3"},
+      {"question": "What is 3/4 of 8?", "answer": "6"}
+    ],
+    "algebra_basic": [
+      {"question": "Solve: x + 5 = 12 (x=?)", "answer": "7"},
+      {"question": "Solve: 2x = 10 (x=?)", "answer": "5"},
+      {"question": "Solve: x - 3 = 7 (x=?)", "answer": "10"}
+    ],
+    "geometry_shapes": [
+      {"question": "Area of square side 4?", "answer": "16"},
+      {"question": "Perimeter of rectangle 3×5?", "answer": "16"},
+      {"question": "Area of triangle base 6 height 4?", "answer": "12"}
+    ]
+  }
+}
